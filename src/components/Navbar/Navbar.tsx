@@ -15,7 +15,7 @@ import ListItemText from '@mui/material/ListItemText';
 import { Avatar } from '@mui/material';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { AppBar, drawerWidth, drawerBackgroundColor, menuItems } from './Navbar_styles';
+import { AppBar, drawerWidth, drawerBackgroundColor, menuItems } from './navbar.styles';
 
 
 export default function PersistentDrawerLeft() {

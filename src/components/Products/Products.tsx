@@ -5,7 +5,7 @@ import { ImageList, ImageListItem, Typography } from '@mui/material';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import Axios from 'axios';
 import Modal from '../ProductItem/ProductItem';
-import {styles} from './Products_styles';
+import {styles} from './products.styles';
 import type { Item } from '../../types/product_item';
 
 

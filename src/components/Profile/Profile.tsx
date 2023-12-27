@@ -1,5 +1,5 @@
 import { Avatar, Typography } from '@mui/material';
-import profileStyles from './ProfileStyles';
+import profileStyles from './profile.styles';
 
 export default function Profile(){
   return (
