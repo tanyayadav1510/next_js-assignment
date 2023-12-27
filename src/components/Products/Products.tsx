@@ -11,7 +11,6 @@ import type { Item } from '../../types/product_item';
 
 const fetchProductsData = async ({ pageParam = 1 }) => {
   const response = await Axios.get(`https://dummyjson.com/products?limit=10&skip=${pageParam}`);
-  console.log(response);
   return response.data;
 };
 
@@ -21,6 +20,8 @@ export default function Products(){
   const [selectedProduct, setSelectedProduct] = useState<Item | null>(null);
   const [products, setProducts] = useState<Item[]>([]);
   const [scrollPosition, setScrollPosition] = useState(0);
+  const [hasFetchedNext, setHasFetchedNext] = useState(false);
+  
 
   const { data, isLoading, isError, error, fetchNextPage, isFetching, isFetchingNextPage,
     hasNextPage} = useInfiniteQuery({
@@ -36,9 +37,10 @@ export default function Products(){
   
   const handleScroll = (event: Event) => {
     const { scrollTop, clientHeight, scrollHeight } = document.documentElement || document.body;
-    if (scrollHeight - scrollTop - clientHeight < 10 && hasNextPage && !isFetchingNextPage) {
-      setScrollPosition(scrollHeight);
+    if (clientHeight < scrollHeight && scrollHeight - scrollTop - clientHeight < 5 && hasNextPage && !isFetchingNextPage && !hasFetchedNext) {
       fetchNextPage();
+      setHasFetchedNext(true);
+      setScrollPosition(scrollHeight-100);
     }
   };
 
@@ -46,11 +48,13 @@ export default function Products(){
     // This useEffect runs after the initial render
     if (data) {
       const newProducts = data.pages[data.pages.length - 1].products;
+      console.log(newProducts)
       setProducts((prevProducts) => [...prevProducts, ...newProducts]);
-      document.documentElement.scrollTop = scrollPosition;
+      window.scrollTo(0, scrollPosition);
+      setHasFetchedNext(false);
       
     }
-  }, [data, scrollPosition]);
+  }, [data]);
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
@@ -117,7 +121,7 @@ export default function Products(){
         open={open}
         onClose={handleCloseModal}
         modalId={curIndex}
-        totalItems={products.length}
+        totalItems={data?.pages[0].total}
         imageSrc={selectedProduct?.thumbnail}
         title={selectedProduct?.title}
         description={selectedProduct?.description}
