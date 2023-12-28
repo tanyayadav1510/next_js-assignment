@@ -38,11 +38,13 @@ const Modal: React.FC<ModalProps> = ({
 }) => {
   return (
     <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth style={styles.modal}>
+      
       <IconButton edge="end" color="inherit" onClick={onClose} style={styles.closeButton}>
         <CloseIcon />
       </IconButton>
-      
+
       <DialogContent style={styles.content}>
+
         <div style={styles.imageContainer}>
           <IconButton color="inherit" disabled={modalId === 1} onClick={() => movePrev(modalId)}>
             <ChevronLeft />
@@ -52,6 +54,7 @@ const Modal: React.FC<ModalProps> = ({
             <ChevronRight />
           </IconButton>
         </div>
+
       </DialogContent>
     </Dialog>
   );
